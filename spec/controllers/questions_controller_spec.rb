@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   
-  let(:question){FactoryGirl.create(:question)}
+  let(:question){ create(:question) }
   describe 'Get#index' do
-    let(:questions) {FactoryGirl.create_list(:question,2)}
+    let(:questions) { create_list(:question,2) }
 
     it 'select all questions' do
       get :index
@@ -31,7 +31,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Get#new' do
-
+    sign_user
     it 'build new question' do
       get :new
       expect(assigns(:question)).to be_a_new(Question)
@@ -44,6 +44,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Get#edit' do
+    sign_user
     before{ get :edit, params: { id: question }}
     
     it 'select question from db' do
@@ -55,33 +56,35 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
   describe 'Post#create' do
+    sign_user
     context 'with valid arguments' do
       it 'record db to db' do
-        expect { post :create, params: { question: FactoryGirl.attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
       it 'redirect to #index'do
-        post :create, params: { question: FactoryGirl.attributes_for(:question) } 
+        post :create, params: { question: attributes_for(:question) } 
         expect(response).to redirect_to questions_path(assigns(Question.last))
       end
     end
 
     context 'with invalid arguments' do
       it 'dont record in db' do
-        expect {post :create, params: { question: FactoryGirl.attributes_for(:invalid_question)}}.not_to change(Question, :count)
+        expect {post :create, params: { question: attributes_for(:invalid_question)}}.not_to change(Question, :count)
       end
 
       it 'render to new_path' do
-        post :create, params: { question: FactoryGirl.attributes_for(:invalid_question) }
+        post :create, params: { question: attributes_for(:invalid_question) }
         expect(response).to render_template :new
       end
     end
   end
   describe 'Patch#update' do
+    sign_user
     context 'with valid attributes' do
 
       it 'search question' do
-        patch :update, params: { id: question, question: FactoryGirl.attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question) }
         expect(assigns(:question)).to eq question
       end
 
@@ -93,7 +96,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirect update to question' do 
-        patch :update, params: { id: question, question: FactoryGirl.attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question) }
         expect(response).to redirect_to questions_path(question)
       end
     end
@@ -101,20 +104,21 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
 
       it 'dont change attributes' do
-        patch :update, params: { id: question, question:  FactoryGirl.attributes_for(:invalid_question)}
+        patch :update, params: { id: question, question:  attributes_for(:invalid_question)}
         question.reload
         expect(question.body).to eq('MyString')
         expect(question.title).to eq('MyString')
       end
 
       it 'render #edit' do
-        patch :update, params: { id: question, question: FactoryGirl.attributes_for(:invalid_question)}
+        patch :update, params: { id: question, question: attributes_for(:invalid_question)}
         expect(response).to render_template :edit 
       end
     end
   end
 
   describe 'Put#destroy' do
+    sign_user
     before { question }
 
     it 'destroy question' do
