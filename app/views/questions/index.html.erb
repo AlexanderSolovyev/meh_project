@@ -1,1 +1,6 @@
 <%= link_to 'Ask question', new_question_path %>
+</br>
+<% @questions.each do |question| %>
+  </br>
+  Question: <%= link_to question.title, question_path(question) %>
+  <% end %>
