@@ -18,14 +18,17 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Get#show' do
+      before {get :show, params: { id: question }}
 
     it 'select question from db' do
-      get :show, params: { id: question }
       expect(assigns(:question)).to eq question
     end
 
+    it 'assigns new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
     it 'render show view' do
-      get :show, params: {id: question }
       expect(response).to render_template :show
     end
   end
