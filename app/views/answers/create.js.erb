@@ -1,2 +1,8 @@
-document.querySelector('.answers').innerHTML = ('<%= j render 'questions/answers' %>')
-document.querySelector('#answer_body').value=''
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message| %>
+  document.querySelector('.error-answer').innerHTML = ('<%= j message %>');
+    <% end %>
+<% else %>
+  document.querySelector('.answers').innerHTML = ('<%= j render 'questions/answers' %>');
+  document.querySelector('#answer_body').value='';
+<% end %>
