@@ -37,4 +37,15 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  let(:answer){ create(:answer, question: question)}
+  describe 'PATH#update' do
+
+    it 'assign the requested answer to answer' do
+    patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer), format: :js}
+    expect(answer).to eq answer
+    end
+    it 'assign question'
+    it 'changes answer attributes'
+  end
+
 end

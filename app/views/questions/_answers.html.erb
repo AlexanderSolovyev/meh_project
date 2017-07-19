@@ -2,5 +2,14 @@
 <% @question.answers.each do |answer| %>
   <p>    <%= answer.body %>
   </p>
+  <p><%= link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id } %></p>
+  <div class='edit_answer'>
+    <p> <%= form_with( model: [@question, answer], id: "edit-answer-#{answer.id}") do |a| %>
+  <%= a.label :body, 'Edit answer' %>
+  <%= a.text_area :body, id: :edit_answer_body %>
+  <%= a.submit 'Done' %>
+<% end %>
+  </p>
+  </div>
   <% end %>
 
