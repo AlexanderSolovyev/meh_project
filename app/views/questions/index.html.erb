@@ -1,8 +1,8 @@
 <%= link_to 'Ask question', new_question_path %>
-</br>
+<br>
 <h3>Questions</h3>
 <hr>
 <% @questions.each do |question| %>
-    </br>
+    <br>
     <%= link_to question.title, question_path(question) %>
 <% end %>

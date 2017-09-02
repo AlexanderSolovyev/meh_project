@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-
   before_action :find_question, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -44,6 +43,7 @@ class QuestionsController < ApplicationController
   end
 
   private
+
   def question_params
     params.require(:question).permit(:title, :body)
   end
