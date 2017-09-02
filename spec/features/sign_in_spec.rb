@@ -18,6 +18,5 @@ feature ' User can sign in' do
 
     expect(page).to have_content 'Invalid Email or password.'
     expect(current_path).to eq new_user_session_path
-
   end
 end
