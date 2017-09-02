@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User can create question' do
 
-  given(:user){ create(:user) }
+  given(:user) {create(:user)}
 
   scenario 'authenticate user can create question' do
     sign_in(user)

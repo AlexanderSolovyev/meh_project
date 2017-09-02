@@ -1,10 +1,18 @@
 <% if @answer.errors.present? %>
-  <% @answer.errors.full_messages.each do |message| %>
-  document.querySelector('.error-answer').innerHTML = ('<%= j message %>');
-    <% end %>
+<% @answer.errors.full_messages.each do |message| %>
+document.querySelector('.error-answer').innerHTML = ('<%= j message %>');
+<% end %>
 <% else %>
-  document.querySelector('.answers').innerHTML = ('<%= j render 'questions/answers' %>');
-document.querySelectorAll('.edit-answer-link').click(function(e) {
-  e.preventDefault();
-
+document.querySelector('.answers').innerHTML = ('<%= j render 'questions/answers' %>');
+var editlinks = document.querySelectorAll('.edit-answer-link');
+for(var x = 0; x < editlinks.length; x++) {
+    editlinks[x].addEventListener("click", myFunction);
+}
+function myFunction(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    var answer_id = this.dataset.answerId;
+    var elem = document.querySelector('form#edit-answer-' + answer_id);
+    elem.parentNode.style.display = 'block';
+}
 <% end %>

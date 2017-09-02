@@ -7,8 +7,8 @@ RSpec.describe Question, type: :model do
   end
 
   it 'validate presence of body' do
-    expect(Question.new(title:'123')).to_not be_valid
+    expect(Question.new(title: '123')).to_not be_valid
   end
 
-  it { is_expected.to have_many :answers }
+  it {is_expected.to have_many :answers}
 end

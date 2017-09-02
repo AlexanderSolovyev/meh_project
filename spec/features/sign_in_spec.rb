@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature ' User can sign in' do
-  given(:user){ create(:user) }
-  
+  given(:user) {create(:user)}
+
   scenario 'Registered user can sign_in' do
     sign_in(user)
 
@@ -18,7 +18,7 @@ feature ' User can sign in' do
     click_on 'Log in'
 
     expect(page).to have_content 'Invalid Email or password.'
-    expect(current_path).to eq new_user_session_path 
+    expect(current_path).to eq new_user_session_path
 
   end
 end

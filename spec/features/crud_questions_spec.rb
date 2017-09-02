@@ -1,9 +1,9 @@
 require 'rails_helper'
 feature 'crud for question' do
 
-  given (:user){create(:user)}
-  given (:question){create(:question)}
-  before { question }
+  given (:user) {create(:user)}
+  given (:question) {create(:question)}
+  before {question}
   scenario 'all can read question' do
     visit questions_path
     click_on question.title

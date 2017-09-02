@@ -28,6 +28,7 @@ feature 'user can crud answers for questions' do
     expect(page).to have_content "Body can't be blank"
   end
 
+  before {answer}
   scenario 'user can edit his answer', js: true do
     sign_in user
     visit question_path(question)
@@ -39,4 +40,7 @@ feature 'user can crud answers for questions' do
     
     expect(page).to have_content 'My new answer'
   end
+
+  scenario 'Unauthenticated user try to edit answer'
+  scenario 'Authenticated user try to edit other user question'
 end

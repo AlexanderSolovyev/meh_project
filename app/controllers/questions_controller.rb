@@ -1,7 +1,8 @@
 class QuestionsController < ApplicationController
 
   before_action :find_question, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except:[:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @questions = Question.all
   end
@@ -21,7 +22,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     if @question.save
       flash[:notice] = 'Your question successfully created.'
-      redirect_to questions_path(params[:id]) 
+      redirect_to questions_path(params[:id])
     else
       render :new
     end
@@ -46,6 +47,7 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body)
   end
+
   def find_question
     @question = Question.find(params[:id])
   end
