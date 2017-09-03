@@ -13,6 +13,11 @@ class AnswersController < ApplicationController
     @question = @answer.question
   end
 
+  def destroy
+    @answer = Answer.find(params[:id])
+    @question = @answer.question
+    @answer.destroy
+  end
   private
 
   def answer_params

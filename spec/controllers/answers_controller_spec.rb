@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      before {sign_in user}
+      before { sign_in user }
 
       it 'does no save answer' do
         expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js } }.to_not change(question.answers, :count)
@@ -51,6 +51,19 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, params: { id: answer, question_id: question, answer: { body: 'edited answer' }, format: :js }
       answer.reload
       expect(answer.body).to eq('edited answer')
+    end
+    describe 'Delete#destroy' do
+      it 'assign question' do
+        delete :destroy, params: { id: answer, question_id: question, format: :js }
+        expect(question).to eq answer.question
+      end
+      it 'assign answer' do
+        delete :destroy, params: { id: answer, question_id: question, format: :js }
+        expect(answer).to eq answer
+      end
+      it 'destroy answer' do
+        expect { delete :destroy, params: { id: answer, question_id: question, format: :js } }.to change(Answer, :count)
+      end
     end
   end
 end

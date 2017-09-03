@@ -4,6 +4,7 @@
         <p>    <%= answer.body %></p>
         <% if user_signed_in? %>
             <p><%= link_to 'Edit answer', '', class: 'edit-answer-link', data: {answer_id: answer.id} %></p>
+            <p><%= link_to 'Destroy answer',question_answer_path(@question,answer), method: :delete, remote: true %></p>
             <div class='edit_answer'>
               <p> <%= form_with(model: [@question, answer], id: "edit-answer-#{answer.id}") do |a| %>
                     <%= a.label :body, 'Edit answer' %>
