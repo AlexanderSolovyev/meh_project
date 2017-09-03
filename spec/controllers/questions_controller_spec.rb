@@ -32,8 +32,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  sign_user
   describe 'Get#new' do
-    sign_user
     it 'build new question' do
       get :new
       expect(assigns(:question)).to be_a_new(Question)
@@ -46,7 +46,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Get#edit' do
-    sign_user
     before { get :edit, params: { id: question } }
 
     it 'select question from db' do
@@ -58,7 +57,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
   describe 'Post#create' do
-    sign_user
     context 'with valid arguments' do
       it 'record db to db' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -82,7 +80,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
   describe 'Patch#update' do
-    sign_user
     context 'with valid attributes' do
       it 'search question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
@@ -118,7 +115,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Put#destroy' do
-    sign_user
     before { question }
 
     it 'destroy question' do

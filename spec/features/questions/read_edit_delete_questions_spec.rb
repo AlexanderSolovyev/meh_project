@@ -5,11 +5,12 @@ feature 'crud for question' do
   before { question }
 
   describe 'authenticate user' do
-    before { sign_in(user) }
-    scenario 'authenticate user can edit question' do
+    before do
+      sign_in(user)
       visit questions_path
       click_link question.title
-
+    end
+    scenario 'can edit question' do
       click_link 'Edit'
       fill_in 'question[title]', with: 'My new title'
       fill_in 'question[body]', with: 'My new body'
@@ -18,34 +19,38 @@ feature 'crud for question' do
       expect(page).to have_content 'Your question successfully updated.'
     end
 
-    scenario 'authenticate user can delete question' do
-      visit questions_path
-      click_link question.title
+    scenario 'can delete question' do
       click_link 'Delete'
 
       expect(page).to have_content 'Deleted successfully'
     end
+
+    scenario 'try edit other user question' do
+      pending 'waining for implement'
+
+      expect(page).to_not have_link 'Edit'
+    end
+    scenario 'try delete other user question' do
+      pending 'waining for implement'
+
+      expect(page).to_not have_link 'Edit'
+    end
   end
 
   describe 'unauthenticate user' do
-    scenario 'all can read question' do
+    before do
       visit questions_path
       click_link question.title
-
+    end
+    scenario 'all can read question' do
       expect(page).to have_content question.title
       expect(page).to have_content question.body
     end
 
     scenario 'guest try edit question' do
-      visit questions_path
-      click_link question.title
-
       expect(page).to_not have_link 'Edit'
     end
     scenario 'guest try delete question' do
-      visit questions_path
-      click_link question.title
-
       expect(page).to_not have_link 'Delete'
     end
   end

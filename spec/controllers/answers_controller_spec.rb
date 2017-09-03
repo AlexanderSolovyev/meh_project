@@ -42,7 +42,15 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
       expect(answer).to eq answer
     end
-    it 'assign question'
-    it 'changes answer attributes'
+    it 'assign question' do
+      patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+      expect(question).to eq answer.question
+    end
+    it 'changes answer attributes' do
+      sign_in user
+      patch :update, params: { id: answer, question_id: question, answer: { body: 'edited answer' }, format: :js }
+      answer.reload
+      expect(answer.body).to eq('edited answer')
+    end
   end
 end
