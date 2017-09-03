@@ -13,12 +13,11 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
-window.onload = function () {
 
-    var editlinks = document.querySelectorAll('.edit-answer-link');
-    for(var x = 0; x < editlinks.length; x++) {
-        editlinks[x].addEventListener("click", myFunction);
-    }
+ //   var editlinks = document.querySelectorAll('.edit-answer-link');
+ //   for(var x = 0; x < editlinks.length; x++) {
+ //       editlinks[x].addEventListener("click", myFunction);
+ //   }
     function myFunction(e) {
         e.preventDefault();
         this.style.display = 'none';
@@ -26,4 +25,3 @@ window.onload = function () {
         var elem = document.querySelector('form#edit-answer-' + answer_id);
         elem.parentNode.style.display = 'block';
     }
-};
