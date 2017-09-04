@@ -1,0 +1,9 @@
+<% if @question.errors.present? %>
+<% @question.errors.full_messages.each do |message| %>
+document.querySelector('.error-question').innerHTML = ('<%= j message %>');
+<% end %>
+<% else %>
+document.querySelector('.question').innerHTML = ('<%= j render 'questions/questions' %>');
+var question = document.querySelector('.edit-question-link');
+question.addEventListener('click', myFunction2);
+<% end %>

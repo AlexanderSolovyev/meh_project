@@ -10,13 +10,13 @@ feature 'crud for question' do
       visit questions_path
       click_link question.title
     end
-    scenario 'can edit question' do
+    scenario 'can edit question', js: true do
       click_link 'Edit'
       fill_in 'question[title]', with: 'My new title'
       fill_in 'question[body]', with: 'My new body'
       click_button 'Done'
 
-      expect(page).to have_content 'Your question successfully updated.'
+      expect(page).to (have_content 'My new title').and(have_content 'My new body')
     end
 
     scenario 'can delete question' do

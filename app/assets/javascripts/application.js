@@ -25,3 +25,10 @@
         var elem = document.querySelector('form#edit-answer-' + answer_id);
         elem.parentNode.style.display = 'block';
     }
+
+function myFunction2(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    var elem = document.querySelector('.edit_question');
+    elem.style.display = 'block';
+}
