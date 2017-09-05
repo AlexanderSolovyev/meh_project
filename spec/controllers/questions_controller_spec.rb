@@ -32,8 +32,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  sign_user
   describe 'Get#new' do
+    sign_user
     it 'build new question' do
       get :new
       expect(assigns(:question)).to be_a_new(Question)
@@ -46,8 +46,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Post#create' do
-    context 'with valid arguments' do
-      it 'record db to db' do
+    sign_user
+    context 'with valid/users/sign_out arguments' do
+      it 'record d/users/sign_outb to db' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
@@ -70,32 +71,50 @@ RSpec.describe QuestionsController, type: :controller do
   end
   describe 'Patch#update' do
     context 'with valid attributes' do
+
       it 'search question' do
         patch :update, params: {id: question, question: attributes_for(:question), format: :js}
         expect(assigns(:question)).to eq question
       end
 
       it 'change attributes' do
+        question = create(:question)
+        @user = question.user
+        sign_in @user
         patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}, format: :js}
         question.reload
         expect(question.body).to eq('new body')
         expect(question.title).to eq('new title')
       end
-
     end
 
     context 'with invalid attributes' do
+      sign_user
       it 'dont change attributes' do
         patch :update, params: {id: question, question: attributes_for(:invalid_question), format: :js}
         question.reload
         expect(question.body).to eq('MyString')
         expect(question.title).to eq('MyString')
       end
+    end
 
+    context 'another user try update question' do
+
+      it 'dont change attributes' do
+        @user = create(:user)
+        question = create(:question)
+        @user2 = create(:user)
+        sign_in @user2
+        patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}, format: :js}
+        question.reload
+        expect(question.body).to eq('MyString')
+        expect(question.title).to eq('MyString')
+      end
     end
   end
 
   describe 'Put#destroy' do
+    sign_user
     before { question }
 
     it 'destroy question' do

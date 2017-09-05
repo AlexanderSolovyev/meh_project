@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
+    @question.user = current_user
     if @question.save
       flash[:notice] = 'Your question successfully created.'
       redirect_to questions_path(params[:id])
@@ -28,6 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    return unless @question.user == current_user
     if @question.update_attributes(question_params)
       flash[:notice] = 'Your question successfully updated.'
     end

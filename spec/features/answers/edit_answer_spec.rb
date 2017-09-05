@@ -23,5 +23,5 @@ feature 'Only user can edit answers for questions' do
 
     expect(page).to_not have_link 'Edit answer'
   end
-  scenario 'Authenticated user try to edit other user question'
+  scenario 'Authenticated user try to edit other user answer'
 end

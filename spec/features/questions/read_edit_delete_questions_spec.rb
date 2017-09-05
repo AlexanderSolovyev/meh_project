@@ -2,11 +2,11 @@ require 'rails_helper'
 feature 'crud for question' do
   given (:user) { create(:user) }
   given (:question) { create(:question) }
-  before { question }
 
   describe 'authenticate user' do
     before do
-      sign_in(user)
+      question
+      sign_in(question.user)
       visit questions_path
       click_link question.title
     end
@@ -16,7 +16,7 @@ feature 'crud for question' do
       fill_in 'question[body]', with: 'My new body'
       click_button 'Done'
 
-      expect(page).to (have_content 'My new title').and(have_content 'My new body')
+      expect(page).to (have_content 'My new title').and(have_content('My new body'))
     end
 
     scenario 'can delete question' do
@@ -24,21 +24,26 @@ feature 'crud for question' do
 
       expect(page).to have_content 'Deleted successfully'
     end
-
+  end
+  describe 'another user' do
+    before do
+      question
+      sign_in(user)
+      visit questions_path
+      click_link question.title
+    end
     scenario 'try edit other user question' do
-      pending 'waining for implement'
-
       expect(page).to_not have_link 'Edit'
     end
-    scenario 'try delete other user question' do
-      pending 'waining for implement'
 
+    scenario 'try delete other user question' do
       expect(page).to_not have_link 'Edit'
     end
   end
 
   describe 'unauthenticate user' do
     before do
+      question
       visit questions_path
       click_link question.title
     end
