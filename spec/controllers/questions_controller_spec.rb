@@ -71,16 +71,13 @@ RSpec.describe QuestionsController, type: :controller do
   end
   describe 'Patch#update' do
     context 'with valid attributes' do
-
+      sign_user
       it 'search question' do
         patch :update, params: {id: question, question: attributes_for(:question), format: :js}
         expect(assigns(:question)).to eq question
       end
 
       it 'change attributes' do
-        question = create(:question)
-        @user = question.user
-        sign_in @user
         patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}, format: :js}
         question.reload
         expect(question.body).to eq('new body')
@@ -99,12 +96,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'another user try update question' do
-
+      sign_another_user
       it 'dont change attributes' do
-        @user = create(:user)
-        question = create(:question)
-        @user2 = create(:user)
-        sign_in @user2
         patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}, format: :js}
         question.reload
         expect(question.body).to eq('MyString')
@@ -114,16 +107,24 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Put#destroy' do
-    sign_user
     before { question }
+    context 'authenticate user' do
+      sign_user
 
-    it 'destroy question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      it 'destroy his question' do
+        expect {delete :destroy, params: {id: question}}.to change(Question, :count).by(-1)
+      end
+
+      it ' redirect to index' do
+        delete :destroy, params: {id: question}
+        expect(response).to redirect_to questions_path
+      end
     end
-
-    it ' redirect to index' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'another user ' do
+      sign_another_user
+      it 'try destroy other user question' do
+        expect {delete :destroy, params: {id: question}}.to_not change(Question, :count)
+      end
     end
   end
 end
