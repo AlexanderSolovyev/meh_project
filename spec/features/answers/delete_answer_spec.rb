@@ -1,11 +1,9 @@
 require 'rails_helper'
 feature 'Only registered user can delete answer' do
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
-  given(:answer) { create(:answer, question: question) }
+  given(:question) {create(:question, user: user)}
+  given(:answer) {create(:answer, question: question, user: user)}
   before do
-    user
-    question
     answer
   end
   scenario 'un-authenticate user try delete answer' do

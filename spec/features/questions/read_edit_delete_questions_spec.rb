@@ -1,12 +1,13 @@
 require 'rails_helper'
 feature 'crud for question' do
   given (:user) { create(:user) }
-  given (:question) { create(:question) }
+  given (:user2) {create(:user)}
+  given (:question) {create(:question, user: user)}
 
   describe 'authenticate user' do
     before do
       question
-      sign_in(question.user)
+      sign_in(user)
       visit questions_path
       click_link question.title
     end
@@ -28,7 +29,7 @@ feature 'crud for question' do
   describe 'another user' do
     before do
       question
-      sign_in(user)
+      sign_in(user2)
       visit questions_path
       click_link question.title
     end
