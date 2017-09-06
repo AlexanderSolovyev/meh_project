@@ -5,4 +5,8 @@ document.querySelector('.error-answer').innerHTML = ('<%= j message %>');
 <% else %>
 document.querySelector('.answers').innerHTML = ('<%= j render 'questions/answers' %>');
 document.querySelector('#answer_body').value = '';
+var editlinks = document.querySelectorAll('.edit-answer-link');
+for (var x = 0; x < editlinks.length; x++) {
+    editlinks[x].addEventListener("click", myFunction);
+}
 <% end %>
