@@ -10,4 +10,6 @@ RSpec.describe Question, type: :model do
   end
 
   it { is_expected.to have_many :answers }
+
+  it {should have_many :attachments}
 end
