@@ -12,4 +12,6 @@ RSpec.describe Question, type: :model do
   it { is_expected.to have_many :answers }
 
   it {should have_many :attachments}
+
+  it {should accept_nested_attributes_for :attachments}
 end

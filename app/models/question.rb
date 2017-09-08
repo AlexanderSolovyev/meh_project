@@ -3,4 +3,5 @@ class Question < ApplicationRecord
   has_many :answers
   belongs_to :user
   has_many :attachments
+  accepts_nested_attributes_for :attachments
 end
