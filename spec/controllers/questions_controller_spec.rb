@@ -35,14 +35,17 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'Get#new' do
     sign_user
+
+    before {get :new}
     it 'build new question' do
-      get :new
       expect(assigns(:question)).to be_a_new(Question)
     end
 
     it 'render new template' do
-      get :new
       expect(response).to render_template :new
+    end
+    it 'bild new attachment for question' do
+      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
     end
   end
 
