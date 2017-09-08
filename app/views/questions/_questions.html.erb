@@ -3,7 +3,7 @@
 <p>Attachments:</p>
 <ul>
   <% @question.attachments.each do |attachment| %>
-      <li><%= attachment.file.file.filename %></li>
+      <li><%= link_to attachment.file.file.filename, attachment.file.url %></li>
   <% end %>
 </ul>
 <% if user_signed_in? && (current_user == @question.user) %>
