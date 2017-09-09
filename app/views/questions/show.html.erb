@@ -8,10 +8,12 @@
     <%= render 'answers' %>
   </div>
   <div class='error-answer'></div>
+<div class='answer'>
   <% if user_signed_in? %>
       <%= form_with(model: [@question, Answer.new], remote: true) do |a| %>
           <%= a.label :body, 'You answer' %>
           <%= a.text_area :body, id: :answer_body %>
           <%= a.submit 'Send answer' %>
       <% end %>
+      </div>
   <% end %>

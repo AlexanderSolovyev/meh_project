@@ -18,7 +18,6 @@ feature 'Add files to question', %q{
     fill_in 'question[body]', with: 'test test'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_button 'Create'
-    save_and_open_page
     expect(page).to have_link 'spec_helper.rb'
   end
 end
