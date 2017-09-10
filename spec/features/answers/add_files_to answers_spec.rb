@@ -18,9 +18,9 @@ I would like to attach answer
     within '.answer' do
       fill_in 'answer[body]', with: 'My answer'
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-      click_button 'Done'
+      click_button 'Send answer'
     end
-    within '.answer' do
+    within '.answers' do
       expect(page).to have_link 'spec_helper.rb'
     end
   end
