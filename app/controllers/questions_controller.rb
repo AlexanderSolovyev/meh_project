@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @answer.attachments.build
   end
 
   def new
@@ -35,8 +36,8 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Your question successfully updated.'
     end
   end
-
   def destroy
+
     return unless @question.user == current_user
     @question.destroy
     flash[:notice] = 'Deleted successfully'
