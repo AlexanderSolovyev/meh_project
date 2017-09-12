@@ -3,6 +3,7 @@ feature 'Only registered user can delete answer' do
   given(:user) { create(:user) }
   given(:question) {create(:question, user: user)}
   given(:answer) {create(:answer, question: question, user: user)}
+  given(:user2) {create(:user)}
   before do
     answer
   end
@@ -17,5 +18,11 @@ feature 'Only registered user can delete answer' do
     click_link 'Destroy answer'
 
     expect(page).to_not have_content answer.body
+  end
+  scenario 'user try delete another users answer', js: true do
+    sign_in user2
+    visit questions_path(question)
+
+    expect(page).to_not have_link 'Destroy answer'
   end
 end
