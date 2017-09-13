@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'render view' do
         sign_in user
         post :create, params: { answer: attributes_for(:answer), question_id: question, format: :js }
-        expect(response).to render_template :create
+        expect(response.header['Content-Type']).to include 'application/json'
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render show view' do
         post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js }
-        expect(response).to render_template :create
+        expect(response.body).to include "Body can't be blank"
       end
     end
   end

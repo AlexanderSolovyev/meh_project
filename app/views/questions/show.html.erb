@@ -10,7 +10,7 @@
   <div class='error-answer'></div>
 <div class='answer'>
   <% if user_signed_in? %>
-      <%= form_with(model: [@question, @answer], remote: true) do |a| %>
+      <%= form_with(model: [@question, @answer], class: 'new_answer', data: {type: :json}, remote: true) do |a| %>
           <%= a.label :body, 'You answer' %>
           <%= a.text_area :body, id: :answer_body %>
           <%= a.fields_for :attachments do |attach| %>

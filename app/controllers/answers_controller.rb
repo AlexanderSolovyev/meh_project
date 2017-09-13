@@ -5,7 +5,11 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-    @answer.save
+    if @answer.save
+      render json: @answer.to_json(only: [:body], :include => {:attachments => {:only => :file}})
+    else
+      render json: @answer.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   def update
