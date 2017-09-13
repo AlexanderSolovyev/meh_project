@@ -8,12 +8,12 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
-    3.times {@answer.attachments.build}
+    @answer.attachments.build
   end
 
   def new
     @question = Question.new
-    3.times {@question.attachments.build}
+    @question.attachments.build
   end
 
   def edit
