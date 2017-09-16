@@ -6,9 +6,8 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     if @answer.save
-      render json: @answer.to_json(only: [:body], :include => {:attachments => {:only => :file}})
-    else
-      render json: @answer.errors.full_messages, status: :unprocessable_entity
+
+      ActionCable.server.broadcast "question_channel", answers: (render partial: 'questions/answers')
     end
   end
 

@@ -3,4 +3,4 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 document.addEventListener 'turbolinks:load', ->
   question = document.querySelector '.edit-question-link'
-  question.addEventListener 'click', myFunction2 if question
+  question.addEventListener 'click', dispayEditForm if question

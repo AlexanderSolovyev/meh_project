@@ -18,7 +18,7 @@
  //   for(var x = 0; x < editlinks.length; x++) {
  //       editlinks[x].addEventListener("click", myFunction);
  //   }
-    function myFunction(e) {
+function hideEditForm(e) {
         e.preventDefault();
         this.style.display = 'none';
         var answer_id = this.dataset.answerId;
@@ -26,7 +26,7 @@
         elem.parentNode.style.display = 'block';
     }
 
-function myFunction2(e) {
+function dispayEditForm(e) {
     e.preventDefault();
     this.style.display = 'none';
     var elem = document.querySelector('.edit_question');
